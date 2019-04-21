@@ -1,15 +1,11 @@
 package service;
 
-import dao.ScoreDao;
 import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TeacherDao;
-import module.Score;
 import module.Student;
 import module.Subject;
 import module.Teacher;
-import sun.rmi.runtime.Log;
-import tools.Database;
 import tools.Print;
 
 import java.sql.Connection;
@@ -46,75 +42,79 @@ public class Menu {
         Print.printAdminMenu();
         String option = scanner.next();
         switch (option) {
-            case "1.1.1":
-            {
+            case "1.1.1": {
                 List<Student> students = new StudentDao(connection).allStudents;
-                students.stream().forEach(student-> System.out.println(student.toString()));
+                students.stream().forEach(student -> System.out.println(student.toString()));
                 showAdminMenu(connection);
                 break;
             }
-            case "1.1.2":
-            {
+            case "1.1.2": {
                 Search.searchScoreByStudentName(connection);
                 break;
             }
-            case "1.1.3":
-            {
+            case "1.1.3": {
                 Search.searchScoreByTeacherName(connection);
                 break;
             }
-            case "1.1.4":
-            {
+            case "1.1.4": {
                 Search.searchScoreBySubjectName(connection);
                 break;
             }
-            case "1.2.1":
-            {
+            case "1.2.1": {
                 List<Subject> subjects = new SubjectDao(connection).allSubjects;
                 subjects.stream().forEach(subject -> System.out.println(subject.toString()));
                 showAdminMenu(connection);
                 break;
             }
-            case "1.2.2":
-            {
+            case "1.2.2": {
                 Search.searchSubjectByName(connection);
                 break;
             }
-            case "1.2.3":
-            {
+            case "1.2.3": {
                 Search.searchSubjectByTeacherName(connection);
                 break;
             }
-            case "1.3.1":
-            {
+            case "1.3.1": {
                 List<Teacher> teachers = new TeacherDao(connection).allTeachers;
                 teachers.stream().forEach(teacher -> System.out.println(teacher.toString()));
                 showAdminMenu(connection);
                 break;
             }
-            case "1.3.2":
-            {
+            case "1.3.2": {
                 Search.searchTeacherByName(connection);
                 break;
             }
-            case "2.1":
-            {
+            case "2.1": {
                 Insert.insertStudent(connection);
                 break;
             }
-            case "2.2":
-            {
+            case "2.2": {
                 Insert.insertSubject(connection);
                 break;
             }
-            case "2.3":
-            {
+            case "2.3": {
                 Insert.insertTeacher(connection);
                 break;
             }
-            case "2.4":
-            {
+            case "2.4": {
                 Insert.insertScore(connection);
+                break;
+            }
+            case "3.1": {
+                Modify.modifyStudentById(connection);
+                break;
+            }
+            case "3.2": {
+                Modify.modifySubjectById(connection);
+                break;
+            }
+            case "3.3": {
+                Modify.modifyTeacherById(connection);
+                break;
+            }
+            case "3.4": {
+                Modify.modifyScoreByStudentId(connection);
+                break;
             }
         }
     }

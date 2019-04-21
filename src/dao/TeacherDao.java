@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class TeacherDao {
     public Teacher teacher;
 
-    public TeacherDao(Connection connection,int teacherId) {
+    public TeacherDao(Connection connection, int teacherId) {
         try (Statement st = Database.getStatement(connection);
              ResultSet rs = Database.executeSQL(st, "SELECT * FROM teacher_info WHERE teacher_id = " + teacherId)) {
             while (rs.next()) {
@@ -20,6 +20,21 @@ public class TeacherDao {
                 int age = rs.getInt("age");
                 String sex = rs.getString("sex");
                 this.teacher = new Teacher(teacherId, userId, name, age, sex);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public TeacherDao(Connection connection, String teacherName) {
+        try (Statement st = Database.getStatement(connection);
+             ResultSet rs = Database.executeSQL(st, "SELECT * FROM teacher_info WHERE name = \'" + teacherName + "\'")) {
+            while (rs.next()) {
+                int userId = rs.getInt("user_id");
+                int teacherId = rs.getInt("teacher_id");
+                int age = rs.getInt("age");
+                String sex = rs.getString("sex");
+                this.teacher = new Teacher(teacherId, userId, teacherName, age, sex);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -74,7 +74,7 @@ public class Insert {
             int userId = Integer.parseInt(teacherInfo[4].split("：")[1]);
 
             try (Statement st = Database.getStatement(connection)) {
-                st.execute("INSERT INTO student_info VALUES (" + userId + ", " + id + ", \'" + name + "\', " + age + ", \'" + sex + "\')");
+                st.execute("INSERT INTO teacher_info VALUES (" + userId + ", " + id + ", \'" + name + "\', " + age + ", \'" + sex + "\')");
                 System.out.println("添加教师" + name + "(" + id + ")" + "成功");
             } catch (SQLException e) {
                 System.out.println("添加失败");
@@ -91,7 +91,7 @@ public class Insert {
 
     public static void insertScore(Connection connection) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入教师信息(例如：学号：9001，考试编号：10042，成绩：89)：");
+        System.out.println("请输入成绩信息(例如：学号：9001，考试编号：10042，成绩：89)：");
         String input = scanner.next();
         if (Input.isScoreInfoValid(input)) {
             String[] scoreInfo = input.split("，");
@@ -100,7 +100,7 @@ public class Insert {
             int score = Integer.parseInt(scoreInfo[2].split("：")[1]);
 
             try (Statement st = Database.getStatement(connection)) {
-                st.execute("INSERT INTO student_info VALUES (null, " + examinationId + ", " + studentId + ", " + score + ")");
+                st.execute("INSERT INTO scores VALUES (null, " + examinationId + ", " + studentId + ", " + score + ")");
                 System.out.println("添加成绩" + studentId + "(" + score + "分)" + "成功");
             } catch (SQLException e) {
                 System.out.println("添加失败");

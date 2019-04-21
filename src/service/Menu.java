@@ -112,6 +112,10 @@ public class Menu {
                 Insert.insertTeacher(connection);
                 break;
             }
+            case "2.4":
+            {
+                Insert.insertScore(connection);
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package dao;
 import module.Student;
 import tools.Database;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,10 +11,10 @@ import java.sql.Statement;
 public class StudentDao {
     public Student student;
 
-    public StudentDao(int studentId) {
+    public StudentDao(Connection connection, int studentId) {
 
         try (
-                Statement st = Database.getStatement(Database.getConnect());
+                Statement st = Database.getStatement(connection);
                 ResultSet rs = Database.executeSQL(st, "SELECT * FROM student_info WHERE student_id = " + studentId)) {
             while (rs.next()) {
                 int id = rs.getInt("student_id");
@@ -30,10 +31,10 @@ public class StudentDao {
 
     }
 
-    public StudentDao(String studentName) {
+    public StudentDao(Connection connection, String studentName) {
 
         try (
-                Statement st = Database.getStatement(Database.getConnect());
+                Statement st = Database.getStatement(connection);
                 ResultSet rs = Database.executeSQL(st, "SELECT * FROM student_info WHERE name = \'" + studentName + "\'")) {
             while (rs.next()) {
                 int id = rs.getInt("student_id");

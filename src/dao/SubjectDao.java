@@ -44,12 +44,13 @@ public class SubjectDao {
     }
 
     public SubjectDao(Connection connection, Teacher teacher) {
+        this.allSubjects = new ArrayList<>();
         try (Statement st = Database.getStatement(connection);
              ResultSet rs = Database.executeSQL(st, "SELECT * FROM subjects WHERE teacher_id = " + teacher.getTeacherId())) {
             while (rs.next()) {
                 int subjectId = rs.getInt("subject_id");
                 String name = rs.getString("name");
-                this.subject = new Subject(subjectId, name, teacher);
+                this.allSubjects.add(new Subject(subjectId, name, teacher));
             }
         } catch (SQLException e) {
             e.printStackTrace();

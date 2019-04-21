@@ -128,7 +128,9 @@ public class Menu {
                 Delete.deleteTeacher(connection);
                 break;
             }
-
+            case "5": {
+                Login.logOut(connection);
+            }
         }
     }
 

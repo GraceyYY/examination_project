@@ -2,8 +2,10 @@ package service;
 
 import dao.UserDao;
 import module.User;
+import tools.Database;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Login {
     public static int authenticate(Connection connection, String input) {
@@ -18,5 +20,13 @@ public class Login {
         }
 
         return 0;
+    }
+
+    public static void logOut(Connection connection) {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

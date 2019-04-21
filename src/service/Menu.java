@@ -107,6 +107,11 @@ public class Menu {
                 Insert.insertSubject(connection);
                 break;
             }
+            case "2.3":
+            {
+                Insert.insertTeacher(connection);
+                break;
+            }
         }
     }
 

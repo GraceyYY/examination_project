@@ -1,5 +1,6 @@
 package dao;
 
+import module.Examination;
 import module.Student;
 import tools.Database;
 
@@ -59,6 +60,25 @@ public class StudentDao {
         try (
                 Statement st = Database.getStatement(connection);
                 ResultSet rs = Database.executeSQL(st, "SELECT * FROM student_info")) {
+            while (rs.next()) {
+                int id = rs.getInt("student_id");
+                int userId = rs.getInt("user_id");
+                String name = rs.getString("name");
+                int age = rs.getInt("age");
+                String sex = rs.getString("sex");
+                this.allStudents.add(new Student(id, userId, name, age, sex));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public StudentDao(Connection connection, Examination examination) {
+        this.allStudents = new ArrayList<>();
+        try (
+                Statement st = Database.getStatement(connection);
+                ResultSet rs = Database.executeSQL(st, "SELECT * FROM student_info INNER JOIN scores USING (student_id) WHERE examination_id = " + examination.getExaminationId())) {
             while (rs.next()) {
                 int id = rs.getInt("student_id");
                 int userId = rs.getInt("user_id");

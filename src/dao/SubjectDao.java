@@ -26,6 +26,20 @@ public class SubjectDao {
         }
     }
 
+    public SubjectDao(Connection connection, String subjectName) {
+        try (Statement st = Database.getStatement(connection);
+             ResultSet rs = Database.executeSQL(st, "SELECT * FROM subjects WHERE name = \'" + subjectName + "\'")) {
+            while (rs.next()) {
+                int subjectId = rs.getInt("subject_id");
+                Teacher teacher = new TeacherDao(connection,rs.getInt("teacher_id")).teacher;
+
+                this.subject = new Subject(subjectId, subjectName, teacher);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public SubjectDao(Connection connection, Teacher teacher) {
         try (Statement st = Database.getStatement(connection);
              ResultSet rs = Database.executeSQL(st, "SELECT * FROM subjects WHERE teacher_id = " + teacher.getTeacherId())) {

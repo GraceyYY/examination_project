@@ -97,6 +97,11 @@ public class Menu {
                 Search.searchTeacherByName(connection);
                 break;
             }
+            case "2.1":
+            {
+                Insert.insertStudent(connection);
+                break;
+            }
         }
     }
 

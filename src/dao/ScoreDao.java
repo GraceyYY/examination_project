@@ -33,4 +33,20 @@ public class ScoreDao {
             e.printStackTrace();
         }
     }
+
+    public ScoreDao(Connection connection, Student student, Subject subject) {
+        this.allScores = new ArrayList<>();
+
+        try (Statement st = Database.getStatement(connection);
+             ResultSet rs = Database.executeSQL(st, "SELECT * FROM scores INNER JOIN examinations USING (examination_id) WHERE student_id = " + student.getStudentId() + " AND subject_id = " + subject.getSubjectId())) {
+
+            while (rs.next()) {
+                Examination examination = new ExaminationDao(connection, rs.getInt("examination_id")).examination;
+                int score = rs.getInt("score");
+                allScores.add(new Score(student, examination, subject, score));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

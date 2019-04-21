@@ -2,8 +2,12 @@ package service;
 
 import dao.ScoreDao;
 import dao.StudentDao;
+import dao.SubjectDao;
+import dao.TeacherDao;
 import module.Score;
 import module.Student;
+import module.Subject;
+import module.Teacher;
 import sun.rmi.runtime.Log;
 import tools.Database;
 import tools.Print;
@@ -62,6 +66,35 @@ public class Menu {
             case "1.1.4":
             {
                 Search.searchScoreBySubjectName(connection);
+                break;
+            }
+            case "1.2.1":
+            {
+                List<Subject> subjects = new SubjectDao(connection).allSubjects;
+                subjects.stream().forEach(subject -> System.out.println(subject.toString()));
+                showAdminMenu(connection);
+                break;
+            }
+            case "1.2.2":
+            {
+                Search.searchSubjectByName(connection);
+                break;
+            }
+            case "1.2.3":
+            {
+                Search.searchSubjectByTeacherName(connection);
+                break;
+            }
+            case "1.3.1":
+            {
+                List<Teacher> teachers = new TeacherDao(connection).allTeachers;
+                teachers.stream().forEach(teacher -> System.out.println(teacher.toString()));
+                showAdminMenu(connection);
+                break;
+            }
+            case "1.3.2":
+            {
+                Search.searchTeacherByName(connection);
                 break;
             }
         }

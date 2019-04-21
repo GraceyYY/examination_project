@@ -23,7 +23,6 @@ public class Search {
             }
         } else {
             System.out.println("未查询到该学生！");
-            searchScoreByStudentName(connection);
         }
 
         Menu.showAdminMenu(connection);
@@ -50,7 +49,6 @@ public class Search {
             }
         } else {
             System.out.println("未查询到教师信息");
-            searchScoreByTeacherName(connection);
         }
 
         Menu.showAdminMenu(connection);
@@ -75,10 +73,57 @@ public class Search {
             }
         } else {
             System.out.println("未查询到课程信息");
-            searchScoreBySubjectName(connection);
         }
 
         Menu.showAdminMenu(connection);
 
+    }
+
+    public static void searchSubjectByName(Connection connection) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入课程名称：");
+        String subjectName = scanner.next();
+        Subject subject = new SubjectDao(connection, subjectName).subject;
+        if (subject != null) {
+            System.out.println(subject.toString());
+        } else {
+            System.out.println("未查询到课程信息");
+        }
+
+        Menu.showAdminMenu(connection);
+    }
+
+    public static void searchSubjectByTeacherName(Connection connection) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入教师姓名：");
+        String teacherName = scanner.next();
+        Teacher teacher = new TeacherDao(connection, teacherName).teacher;
+        if (teacher != null) {
+            List<Subject> subjects = new SubjectDao(connection, teacher).allSubjects;
+            if (subjects.size() > 0) {
+                subjects.stream().forEach(subject -> System.out.println(subject.toString()));
+            } else {
+                System.out.println("未查询到课程信息");
+            }
+
+        } else {
+            System.out.println("未查询到教师信息");
+        }
+
+        Menu.showAdminMenu(connection);
+    }
+
+    public static void searchTeacherByName(Connection connection) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入教师姓名：");
+        String teacherName = scanner.next();
+        Teacher teacher = new TeacherDao(connection, teacherName).teacher;
+        if (teacher != null) {
+            System.out.println(teacher.toString());
+        } else {
+            System.out.println("未查询到教师信息");
+        }
+
+        Menu.showAdminMenu(connection);
     }
 }

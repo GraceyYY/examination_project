@@ -35,4 +35,29 @@ public class Insert {
         Menu.showAdminMenu(connection);
 
     }
+
+    public static void insertSubject(Connection connection) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入课程信息(例如：课程编号：5011，课程名称：生物，教师工号：9011)：");
+        String input = scanner.next();
+        if (Input.isSubjectInfoValid(input)) {
+            String[] student = input.split("，");
+            int id = Integer.parseInt(student[0].split("：")[1]);
+            String name = student[1].split("：")[1];
+            int teacherId = Integer.parseInt(student[2].split("：")[1]);
+
+            try (Statement st = Database.getStatement(connection)) {
+                st.execute("INSERT INTO subjects VALUES (null, " + id + ", \'" + name + "\', " + teacherId + ")");
+                System.out.println("添加课程" + name + "(" + id + ")" + "成功");
+            } catch (SQLException e) {
+                System.out.println("添加失败");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("请按照正确的格式输入课程信息(例如：课程编号：5011，课程名称：生物，教师工号：9011)：");
+            insertSubject(connection);
+        }
+
+        Menu.showAdminMenu(connection);
+    }
 }

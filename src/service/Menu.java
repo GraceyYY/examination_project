@@ -1,6 +1,8 @@
 package service;
 
+import dao.ScoreDao;
 import dao.StudentDao;
+import module.Score;
 import module.Student;
 import sun.rmi.runtime.Log;
 import tools.Database;
@@ -36,7 +38,33 @@ public class Menu {
     }
 
     public static void showAdminMenu(Connection connection) {
-        System.out.println("admin");
+        Scanner scanner = new Scanner(System.in);
+        Print.printAdminMenu();
+        String option = scanner.next();
+        switch (option) {
+            case "1.1.1":
+            {
+                List<Student> students = new StudentDao(connection).allStudents;
+                students.stream().forEach(student-> System.out.println(student.toString()));
+                showAdminMenu(connection);
+                break;
+            }
+            case "1.1.2":
+            {
+                Search.searchScoreByStudentName(connection);
+                break;
+            }
+            case "1.1.3":
+            {
+                Search.searchScoreByTeacherName(connection);
+                break;
+            }
+            case "1.1.4":
+            {
+                Search.searchScoreBySubjectName(connection);
+                break;
+            }
+        }
     }
 
     public static void showStudentMenu() {

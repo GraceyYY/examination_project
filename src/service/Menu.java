@@ -116,6 +116,19 @@ public class Menu {
                 Modify.modifyScoreByStudentId(connection);
                 break;
             }
+            case "4.1": {
+                Delete.deleteStudent(connection);
+                break;
+            }
+            case "4.2": {
+                Delete.deleteSubject(connection);
+                break;
+            }
+            case "4.3": {
+                Delete.deleteTeacher(connection);
+                break;
+            }
+
         }
     }
 
